@@ -28,10 +28,6 @@ public class PlayerData
         currentResource1 += choice.resourceChange1;
         currentResource2 += choice.resourceChange2;
         currentResource3 += choice.resourceChange3;
-        // 자원 최대치 넘지 않도록
-        currentResource1 = Mathf.Clamp(currentResource1, 0, maxResource1);
-        currentResource2 = Mathf.Clamp(currentResource2, 0, maxResource2);
-        currentResource3 = Mathf.Clamp(currentResource3, 0, maxResource3);
     }
 
 

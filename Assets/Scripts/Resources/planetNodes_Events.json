@@ -1,0 +1,25 @@
+{"events":
+  [
+    {
+      "eventID": "1",
+      "eventType": "main_story",
+      "title": "the_beginning",
+      "description": "welcome to universe",
+      "choices": [ "hello" ]
+    },
+    {
+      "eventID": "2",
+      "eventType": "planetA",
+      "title": "aFirstPlanet",
+      "description": "welcom to first planet",
+      "choices": [ "stay here" ]
+    },
+    {
+      "eventID": "2",
+      "eventType": "planetA",
+      "title": "aFirstPlanet",
+      "description": "welcom to first planet",
+      "choices": [ "no" ]
+    }
+  ]
+}

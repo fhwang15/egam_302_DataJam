@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+//Will load json database
+
+
 [System.Serializable]
 public class EventListWrapper
 {
@@ -11,7 +14,7 @@ public class EventListWrapper
 public class EventDataBase: MonoBehaviour
 {
 
-    public static EventDataBase instance;
+    public static EventDataBase instance; //make it singleton pattern
     private Dictionary<string, GameEvent> eventDictionary = new Dictionary<string, GameEvent>();
 
     private void Awake()
@@ -30,47 +33,59 @@ public class EventDataBase: MonoBehaviour
 
     void LoadEvents()
     {
-        // Resources 폴더에서 JSON 파일 로드
-        TextAsset jsonFile = Resources.Load<TextAsset>("Events/battle_events");
+        TextAsset jsonFile = Resources.Load<TextAsset>("planetNodes_Events"); //load jsonfile from resources folder
+        Debug.Log(jsonFile.text);
 
         if (jsonFile != null)
         {
             EventListWrapper wrapper = JsonUtility.FromJson<EventListWrapper>(jsonFile.text);
+            // changes the texts within the textfile into c# object
 
-            foreach (var evt in wrapper.events)
+            foreach (var events in wrapper.events)
             {
-                eventDictionary[evt.eventID] = evt;
+                //Add all the events into the dictionary
+                eventDictionary[events.eventID] = events;
             }
-
-            Debug.Log($"이벤트 {eventDictionary.Count}개 로드 완료!");
         }
     }
-
-    // 이벤트 타입으로 랜덤하게 하나 가져오기
-    public GameEvent GetRandomEventByType(string eventType)
-    {
-        var matchingEvents = eventDictionary.Values.Where(e => e.eventType == eventType).ToList();
-
-        if (matchingEvents.Count > 0)
-        {
-            return matchingEvents[Random.Range(0, matchingEvents.Count)];
-        }
-
-        Debug.LogWarning($"{eventType} 타입 이벤트를 찾을 수 없습니다!");
-        return null;
-    }
-
-    // ID로 특정 이벤트 가져오기
+    
     public GameEvent GetEventByID(string eventID)
     {
+
+        //Get events by ID if it exist in the dictionary then u got it
         if (eventDictionary.ContainsKey(eventID))
         {
+            //search for direct id
             return eventDictionary[eventID];
         }
 
-        Debug.LogWarning($"{eventID} 이벤트를 찾을 수 없습니다!");
+        Debug.LogWarning($"{eventID} cnat find this event");
         return null;
     }
+
+    /*
+    //Get Random event by type
+    public GameEvent GetRandomEventByType(string eventType)
+    {
+        List<GameEvent> matchingEvents = new List<GameEvent>();
+
+        foreach (GameEvent events in eventDictionary.Values)
+        {
+            if (events.eventType == eventType)
+            {
+                 matchingEvents.Add(events);
+            }
+        }
+
+        if (matchingEvents.Count > 0)
+        {
+            int randomIndex = Random.Range(0, matchingEvents.Count);
+            return matchingEvents[randomIndex];
+        }
+ 
+        return null;
+    }
+    */
 
 
 }
